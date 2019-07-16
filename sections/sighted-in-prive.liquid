@@ -1,0 +1,61 @@
+<div class="section-header section-header--small">
+    <h2 class="section-header__title">{{ section.settings.text-box }}</h2>
+  </div>
+<div class="section-home-sipr grid-uniform">
+  {% for block in section.blocks %}
+          {% include 'sipr-grid-item' %}
+  {% endfor %}
+  <div class="grid__item large--one-whole medium-down--one-whole">
+    <div class=" sighted-in-prive-btn text-center">
+      <a href="{{ section.settings.link }}"> Click To See All Sighted in Privé</a>
+    </div>
+  </div>
+</div>  
+{% schema %}
+{
+  "name": "Sighted on Prive",
+  "max_blocks": 20,
+  "settings": [
+    {
+      "id": "text-box",
+      "type": "text",
+      "label": "Heading",
+      "default": "Sighted on privé revaux"
+    },
+    {
+      "id": "link",
+      "type": "url",
+      "label": "CTA"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "image",
+      "name": "Add New Sighted",
+      "settings": [
+        {
+          "id": "image",
+          "type": "image_picker",
+       		"label": "Image Banner"
+        },
+          {
+            "type": "product",
+            "id": "product",
+            "label": "Product"
+          },
+          {
+            "type": "text",
+            "id": "social_handle",
+            "label": "Social Profile"
+          }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Sighted on Prive",
+      "category": "Blog"
+    }
+  ]
+}
+{% endschema %}

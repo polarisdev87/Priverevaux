@@ -1,0 +1,9 @@
+
+{% layout none %}
+
+{
+	"id": "{{ customer.id }}",
+	"email": "{{ customer.email }}",
+	"tags": "{{ customer.tags | join: ', ' }}",
+	"orders_count": {{ customer.orders_count }}
+}

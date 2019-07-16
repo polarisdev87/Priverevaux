@@ -1,0 +1,85 @@
+<div class="">
+  <div class="section-home-header text-center">
+    <h3> {{ section.settings.text-box }} </h3>
+  </div>
+</div>
+<div class="section-home-banners grid-uniform visually-hidden">
+  <div class="grid__item small--one-whole text-center">
+    <picture>
+      <source media="(min-width: 1785px)" srcset="{{ 'Brand-Ethos.jpg' | asset_img_url: '1920x' | split:"?" | first }}">
+      <source media="(min-width: 1545px)" srcset="{{ 'Brand-Ethos.jpg' | asset_img_url: '1650x' | split:"?" | first }}">
+      <source media="(min-width: 1212px)" srcset="{{ 'Brand-Ethos.jpg' | asset_img_url: '1440x' | split:"?" | first }}">
+      <source media="(min-width: 896px)" srcset="{{ 'Brand-Ethos_1440x.jpg' | asset_img_url: '1024x' | split:"?" | first }}">
+      <source media="(min-width: 752px)" srcset="{{ 'Brand-Ethos_1440x.jpg' | asset_img_url: '768x' | split:"?" | first }}">
+      <img src="{{ 'Brand-Ethos_1440x.jpg' | asset_img_url: '991x' | split:"?" | first }}" alt="Privé Revaux Ethos" class="hp-brand-images">
+    </picture>
+  </div> 
+</div>
+<div class="section-home-banners grid-uniform">
+  {% for block in section.blocks %}
+        {% if forloop.index0 != 4 %}
+        {% assign column_width = 'grid__item small--one-whole medium--one-half post-large--one-half' %}
+        {% assign image_width = '655x' %}
+        {% else %}
+        {% assign column_width = 'small--one-whole' %}
+        {% assign image_width = '1350x' %}
+        {% endif %}
+    {%if forloop.index0 == 4 %}
+  <div class="grid__item small--one-whole text-center">
+    <picture>
+      <source media="(min-width: 1785px)" srcset="{{ 'Model-Graphic.jpg' | asset_img_url: '1920x' | split:"?" | first }}">
+      <source media="(min-width: 1545px)" srcset="{{ 'Model-Graphic.jpg' | asset_img_url: '1650x' | split:"?" | first }}">
+      <source media="(min-width: 1212px)" srcset="{{ 'Model-Graphic.jpg' | asset_img_url: '1440x' | split:"?" | first }}">
+      <source media="(min-width: 896px)" srcset="{{ '1-Brand-Ethos_1440x.jpg' | asset_img_url: '1024x' | split:"?" | first }}">
+      <source media="(min-width: 752px)" srcset="{{ '1-Brand-Ethos_1440x.jpg' | asset_img_url: '768x' | split:"?" | first }}">
+      <img src="{{ '1-Brand-Ethos_1440x.jpg' | asset_img_url: '991x' | split:"?" | first }}" alt="Privé Revaux Sales Model" class="hp-brand-images sales-model">
+    </picture>
+  </div>
+  {%endif%}        
+        <div class="grid__item {{ column_width }}">
+          <a href="{{ block.settings.link }}"><img src="{{ block.settings.image | img_url: image_width }}"/></a>
+        <div class="btn-wrapper">   
+          <a href="{{ block.settings.link }}" class="btn">{{ block.settings.linktext }}</a>
+        </div>
+        </div> 
+  {% endfor %}
+
+</div>  
+{% schema %}
+{
+  "name": "Below Home Banner Section",
+	"max_blocks": 5,
+  "settings": [
+    {
+      "id": "text-box",
+      "type": "text",
+      "label": "Heading",
+      "default": "Title"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "image",
+      "name": "Add Block",
+      "settings": [
+        {
+          "id": "image",
+          "type": "image_picker",
+       		"label": "Image Banner"
+        },
+        {
+          "id": "link",
+          "type": "url",
+       		"label": "Button link"
+        },
+        {
+          "id": "linktext",
+          "type": "text",
+          "label": "Button text",
+          "default": "Click here"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

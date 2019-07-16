@@ -1,0 +1,45 @@
+<!-- Start Initialize BC QuickView -->
+<!-- VERSION 0.1.8 -->
+{% if template contains 'collection' or template contains 'search' %}
+  {% assign bc_settings = shop.metafields.bc-sf-filter.settings %}
+  {% if bc_settings != nil %}
+    {% assign bc_settings = bc_settings | remove: '{' | remove: '}' %}
+    {% if bc_settings contains 'activeQuickView' %}
+      {% assign bc_settings = bc_settings | split: ',' %}
+      {% for settings in bc_settings %}
+        {% if settings contains 'activeQuickView' %}
+          {% assign activeQuickView = settings | remove: '"activeQuickView":' %}
+          {% break %}
+        {% endif %}        
+      {% endfor %}
+    {% else %}
+    {% assign activeQuickView = false %}
+  {% endif %}
+  {% endif %}
+
+  {% if activeQuickView contains 'true' %}
+  {{ 'bc-quickview-lib.js' | asset_url | script_tag }}  
+  <script>
+      {% if bc_settings.quickview != blank %}
+      var bcQuickViewParams = {
+        {{ bc_settings.quickview }}
+      }; 
+      {% else %}
+      var bcQuickViewParams = {
+        settings: {
+          activeQuickView: true
+        },
+        label: {
+          quickviewBtnLabel: {% assign quick_view = 'product_filter_search_quickview.quick_view' | t %} {% unless quick_view contains 'translation missing'  %} "{{ quick_view }}" {% else %} 'Quick View' {% endunless %},
+          addtocartBtnLabel: {% assign add_to_cart = 'product_filter_search_quickview.add_to_cart' | t %} {% unless add_to_cart contains 'translation missing'  %} "{{ add_to_cart }}" {% else %} 'Add To Cart' {% endunless %},
+          soldoutLabel: {% assign sold_out = 'product_filter_search_quickview.sold_out' | t %} {% unless sold_out contains 'translation missing'  %} "{{ sold_out }}" {% else %} 'Sold Out' {% endunless %}
+        }
+      };
+      {% endif %}
+      var bcQuickView = new BCQuickView();
+      bcQuickView.init(bcQuickViewParams);      
+  </script>
+  
+  {% endif %} 
+{% endif %}
+<!-- End Initialize BC QuickView -->

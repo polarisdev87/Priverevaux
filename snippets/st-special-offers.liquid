@@ -1,0 +1,107 @@
+{% comment %}
+Do NOT change this file.
+{% endcomment %}
+
+{% if template contains "login" %}
+	{% if customer %}
+		<script>
+          if(window.location.href.toLowerCase().indexOf("checkout.shopify.com") > -1)
+          {
+            try {
+              let decodeURL = decodeURIComponent(window.location.href.toLowerCase());
+              decodeURL = decodeURL.split("checkout_url=")[1];
+              decodeURL = decodeURL.replace("checkout.shopify.com", "{{shop.permanent_domain}}");
+
+              window.location.href = decodeURL;
+            }
+            catch(e) { }
+          }
+		</script>
+	{% endif %}
+{% endif %}
+
+<script>window.jQuery || 
+  document.write("<script src='https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js'>\x3C/script>")
+</script>
+
+<script>
+  {% assign so_offer_page_template = '' %}
+  window.so_offer = {
+    shop_slug: "{{shop.permanent_domain | remove: '.myshopify.com' }}",
+    money_format: "{{shop.money_format | replace: '"', "'"}}",
+    customer: null,
+    cart: null,
+    product: null,
+    collection: null
+  }
+  
+  {% comment %} Customer Object Start {% endcomment %}
+  {% if customer %}
+  window.so_offer.customer = {
+    id: {{customer.id}},
+    email: "{{customer.email}}",
+    tags: {{customer.tags | json}},
+    first_name: "{{customer.first_name}}",
+    last_name: "{{customer.last_name}}"
+  };
+  {% endif %}
+  {% comment %} Customer Object End {% endcomment %}
+  
+  
+  {% comment %} Product Object Start {% endcomment %}
+  {% if template contains "product" %}
+  	{% assign so_offer_page_template = 'product' %}
+    {% for collection in product.collections %}
+      {% if forloop.first %}
+          {% assign so_offer_products_with_collections = collection.id %}
+      {% else %}
+          {% assign so_offer_products_with_collections = so_offer_products_with_collections | append: ',' | append: collection.id %}
+      {% endif %}
+    {% endfor %}
+  	
+  	window.so_offer.product = {{ product | json }};
+    window.so_offer.product.collections = "{{ so_offer_products_with_collections }}";
+  {% comment %} Product Object End {% endcomment %}
+  
+  {% comment %} Collection Object Start {% endcomment %}
+  {% elsif template contains "collection" %}
+  	{% assign so_offer_page_template = 'collection' %}
+  	window.so_offer.collection = {{ collection | json }};
+  {% comment %} Collection Object End {% endcomment %}
+  
+  {% comment %} Cart Object Start {% endcomment %}
+  {% elsif template contains "cart" %}
+  	{% if cart %}
+  		{% assign so_offer_page_template = 'cart' %}
+        window.so_offer.cart = {{ cart | json }};
+        window.so_offer.cart_product_collections = {};
+        {% for item in cart.items %}
+            window.so_offer.cart_product_collections[{{ item.variant_id }}] = [];
+            {% for col in item.product.collections %}
+                window.so_offer.cart_product_collections[{{ item.variant_id }}].push({{col.id}});
+            {% endfor %}
+        {% endfor %}
+                                                         
+		window.so_offer.cart.items.forEach(function(item) {
+          if(window.so_offer.cart_product_collections[item.variant_id] !== undefined) {
+            item.collections = [];
+            window.so_offer.cart_product_collections[item.variant_id].forEach(function(innerItem) {
+				item.collections.push(innerItem);
+            });
+          }
+          else
+            item.collections = [];
+        });
+  	{% endif %}
+    
+  	// cart_items, product all response including variants, product related collections
+  {% endif %}
+  {% comment %} Cart Object End {% endcomment %}
+  
+  {% comment %} General Variables Start {% endcomment %}
+  window.so_offer.page_type = "{{ so_offer_page_template }}";
+  {% comment %} General Variables End {% endcomment %}
+</script>
+<!-- Main Script DON'T REMOVE THIS START -->
+<script type="text/javascript" src="https://app.specialoffers.io/app/js/app.js?shop={{shop.permanent_domain}}"></script>
+<!-- Main Script DON'T REMOVE THIS END -->

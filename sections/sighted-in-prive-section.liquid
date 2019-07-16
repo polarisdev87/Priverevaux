@@ -1,0 +1,42 @@
+<div class="section-home-sipr grid-uniform">
+  {% for block in section.blocks %}
+          {% include 'sipr-grid-item-simple' %}
+  {% endfor %}
+  </div>
+{% schema %}
+{
+  "name": "Sighted on Prive Simple",
+  "max_blocks": 450,
+  "settings": [
+    {
+      "id": "text-box",
+      "type": "text",
+      "label": "Heading",
+      "default": "Sighted on privé revaux"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "image",
+      "name": "Add New Sighted",
+      "settings": [
+        {
+          "id": "image",
+          "type": "image_picker",
+       		"label": "Image Banner"
+        },
+        {
+          "id": "link",
+          "type": "url",
+       		"label": "Button link"
+        },
+          {
+            "type": "text",
+            "id": "social_handle",
+            "label": "Social Profile"
+          }
+      ]
+    }
+  ]
+}
+{% endschema %}

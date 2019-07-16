@@ -1,0 +1,40 @@
+{% assign column_width = 'grid__item post-large--one-third medium--one-half text-center related-cart' %}
+        <div class="{{ column_width }}">
+        <div class="overlay-image">
+        <img src="{{ block.settings.image | img_url: '450x' }}"/>
+        <p class="supports-fontface icon icon-instagram">{{block.settings.social_handle}}<a href="#" class="btn btn-prive sip-btn">Click to shop</a></p>
+        </div>
+            {% assign product = all_products[block.settings.product] %}
+            <div class="product-wrapper">
+            <h6>The look</h6>
+              <h4 class="title tk-big-caslon-fb">{{ product.title }}<br><span class="atc-span">{{ product.variants[0].title }}</span></h4>
+            <div class="image-wrapper">
+            <a href="/products/{{product.handle}}"><img src="{{ product.variants[0].image.src  | img_url: '400x180' }}" class="atc-image" /></a>
+            </div>
+            {% for option in product.options %}
+                {% if option == 'Color' %}
+                  {% assign index = forloop.index0 %}
+                  {% assign colorlist = '' %}
+                  {% assign color = '' %}
+                  {% assign color_id = '' %}
+                  {% for variant in product.variants %}
+                    {% capture color %}{{ variant.options[index] }}{% endcapture %}
+                    {% capture color_id %}{{ variant.id }}{% endcapture %}
+                    {% capture variant_image %}{{ variant.image.src }}{% endcapture %}
+                    {% if variant.available %}
+                    {% assign variant_available = 1 %}
+                    {% else %}
+                    {% assign variant_available = 0 %}
+                    {% endif %}
+                    {% unless colorlist contains color %}
+                      <img src="{{ color | downcase | replace: ' ', '-' | replace: '/', '-' | append: '.png' | asset_url }}" alt="{{ color }}" width="24" height="24" data-product-id="{{color_id}}" data-main-image="{{ variant.image.src | img_url: '400x180' }}" data-available="{{variant_available}}" class="atc-swatch" />
+                      {% capture tempList %}{{colorlist | append: color | append: ' '}}{% endcapture %}
+                      {% assign colorlist = tempList %}
+                    {% endunless %}
+                  {% endfor %}
+                {% endif %}
+              {% endfor %}
+              <p>{{ product.variants[0].price | money }}</p>
+              <a href="/cart/add?id={{product.variants[0].id}}&amp;quantity=1" data-variant-id="{{product.variants[0].id}}" class="btn btn-prive atc-btn">Add to Cart</a>
+            </div>
+        </div> 

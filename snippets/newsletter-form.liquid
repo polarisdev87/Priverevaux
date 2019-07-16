@@ -1,0 +1,35 @@
+<div class="form-vertical small--hide">
+  <form class="form newsletter subscribe" target="_blank" novalidate="novalidate" action="//priverevaux.us14.list-manage.com/subscribe/post?u=a16a4d2f27faf82c295324f89&amp;id=e01213cce9" method="post" id="newsletter-validate-detail" _lpchecked="1">
+      <div class="input-group">
+      <input type="hidden" name="FNAME" id="mce-FNAME" value="">
+                <input type="hidden" name="LNAME" id="mce-LNAME" value="">
+                <input type="hidden" name="MMERGE3" id="mce-MMERGE3" value="">
+                <input type="hidden" name="MMERGE4" id="mce-MMERGE4" value="">
+                <input type="hidden" name="MMERGE5" id="mce-MMERGE5" value="">
+                <input name="EMAIL" type="EMAIL" value="{% if customer %}{{ customer.email }}{% endif %}" placeholder="{{ 'general.newsletter_form.newsletter_email' | t }}" data-validate="{required:true, 'validate-email':true}">
+                <div style="position: absolute; left: -5000px;" aria-hidden="true"><input type="text" name="b_a16a4d2f27faf82c295324f89_e01213cce9" tabindex="-1" value=""></div>
+        <div class="actions">
+          {% comment %}
+          <button type="submit" class="btn" name="commit" id="subscribe">{{ 'general.newsletter_form.submit' | t }}</button>
+          {% endcomment %}
+          <button class="btn" name="subscribe" title="Subscribe" type="submit">{{ 'general.newsletter_form.submit' | t }}</button>
+        </div>
+      </div>
+  </form>
+</div>
+<div class="form-vertical post-large--hide large--hide medium--hide">
+  {% form 'customer' %}
+    {{ form.errors | default_errors }}
+    {% if form.posted_successfully? %}
+      <p class="note form-success">{{ 'general.newsletter_form.confirmation' | t }}</p>
+    {% else %}
+      <input type="hidden" name="contact[tags]" value="newsletter">
+      <div class="input-group">
+        <input type="email" value="{% if customer %}{{ customer.email }}{% endif %}" placeholder="{{ 'general.newsletter_form.newsletter_email' | t }}" name="contact[email]" id="Email" class="input-group-field" aria-label="{{ 'general.newsletter_form.newsletter_email' | t }}" autocorrect="off" autocapitalize="off">
+        <span class="input-group-btn">
+          <button type="submit" class="btn" name="commit" id="subscribe">{{ 'general.newsletter_form.submit' | t }}</button>
+        </span>
+      </div>
+    {% endif %}
+  {% endform %}
+</div>

@@ -1,0 +1,34 @@
+.btn-prive{
+    border-radius: 0;
+    color: #fff;
+    cursor: pointer;
+    font-size: 0.75rem;
+    -webkit-font-smoothing: antialiased;
+    font-weight: 600;
+    line-height: 1;
+    padding: 22px 30px;
+    text-align: center;
+    text-decoration: none;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    transition: background-color .15s ease;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    max-width: 100%;
+    outline: none;
+    border: 2px solid #ba603f;
+    margin-bottom: 4px;
+    vertical-align: middle;
+}
+.btn-prive:hover{
+        background: #fff;
+        color: #ba603f;
+        text-decoration: none;
+}
+@media (min-width: 1000px){
+    .page--logo-main .main .logo {
+        display: inline-block;
+    }
+}

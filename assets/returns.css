@@ -1,0 +1,6 @@
+.btn-group>.btn:first-child {
+    display: none !important;
+}
+form.ng-pristine .ng-scope.margin-top-25 {
+    display: none !important;
+}

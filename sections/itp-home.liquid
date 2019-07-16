@@ -1,0 +1,59 @@
+<div class="grid-uniform">
+<div class="grid__item post-large--one-whole">
+    <h2 class="h4 tk-big-caslon-fb ints-content-title"> {{ section.settings.text-box }} </h2>
+</div>
+</div>
+<div class="section-home-in-the-press grid-uniform">
+  {% for block in section.blocks %}
+        <div class="grid__item small--one-whole medium--one-half post-large--one-quarter text-center">
+          <a href="{{ block.settings.link }}" target="_blank"><img src="{{ block.settings.image | img_url: 'x90' }}"/></a>
+        <div class="btn-wrapper">   
+          <p><a href="{{ block.settings.link }}">{{ block.settings.shortdescription }}</a></p>
+        </div>
+        </div> 
+  {% endfor %}
+</div>  
+{% schema %}
+{
+  "name": "In the press Home Section",
+	"max_blocks": 4,
+  "settings": [
+    {
+      "id": "text-box",
+      "type": "text",
+      "label": "Heading",
+      "default": "Title"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "image",
+      "name": "In the press Block",
+      "settings": [
+        {
+          "id": "image",
+          "type": "image_picker",
+       		"label": "Image Banner"
+        },
+        {
+          "id": "link",
+          "type": "url",
+       		"label": "Article Link"
+        },
+        {
+          "id": "shortdescription",
+          "type": "text",
+          "label": "Short Description",
+          "default": "Click here"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "In the press Home Section",
+      "category": "Blog"
+    }
+  ]
+}
+{% endschema %}
